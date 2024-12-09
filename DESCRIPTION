@@ -1,0 +1,24 @@
+Package: shilohkira
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5)
+Authors@R: c(
+    person("Shiloh", "Liu", , "shiloh_liu@college.harvard.edu", role = "cre"),
+    person("Kira", "Tian", , "kiratian@college.harvard.edu", role = "cre")
+  )
+Config/testthat/edition: 3

@@ -1,0 +1,53 @@
+---
+title: "camDogs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{camDogs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(shilohkira)
+```
+```{r}
+newBirth <- check_and_rename_levels(Birth, "Treatment")
+
+Bodyweight2 <- make_column_numeric_interactive(Bodyweight2, "Body Weight 2")
+Bodyweight2 <- make_column_numeric_interactive(Bodyweight2, "Body Weight 3")
+Bodyweight2 <- make_column_numeric_interactive(Bodyweight2, "Body Weight 1")
+
+weight_trends(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  grouping_col = "Treatment",
+  weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
+  time_points = c("Week 1", "Week 2", "Week 3"),
+  merge_needed = TRUE
+)
+
+summary_stats <- summary_table(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  grouping_col = "Treatment",
+  weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
+  time_points = c("Week 1", "Week 2", "Week 3"),
+  merge_needed = TRUE
+)
+
+wrongnum(
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
+  time_points = c("Week 1", "Week 2", "Week 3")
+)
+```
