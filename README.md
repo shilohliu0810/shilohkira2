@@ -41,8 +41,8 @@ install the pacakge from GitHub by running
 
 ## Data
 
-We are also introducing you to the \[mortality dataset\]
-(<https://ghdx.healthdata.org/record/ihme-data/gbd-2010-mortality-results-1970-2010>)
+We are also introducing you to the [mortality
+dataset](https://ghdx.healthdata.org/record/ihme-data/gbd-2010-mortality-results-1970-2010)
 in our package. This dataset contains data of mortality by age and sex
 across countries over time from 1970-2010, for 187 countries in the
 world. This is an important dataset to explore if you want to see how
@@ -73,11 +73,11 @@ library(shilohkira)
 ``` r
 ## basic example code
 install.packages("readxl")
-#> Installing package into '/private/var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T/RtmprB6ryM/temp_libpath34e248f080d2'
+#> Installing package into '/private/var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T/RtmprB6ryM/temp_libpath34e24b1c3e0c'
 #> (as 'lib' is unspecified)
 #> 
 #> The downloaded binary packages are in
-#>  /var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T//RtmpOvijm3/downloaded_packages
+#>  /var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T//RtmpmLo0kD/downloaded_packages
 library(readxl)
 library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
