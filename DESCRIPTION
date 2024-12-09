@@ -19,6 +19,6 @@ Depends:
     R (>= 3.5)
 Authors@R: c(
     person("Shiloh", "Liu", , "shiloh_liu@college.harvard.edu", role = "cre"),
-    person("Kira", "Tian", , "kiratian@college.harvard.edu", role = "cre")
+    person("Kira", "Tian", , "kiratian@college.harvard.edu", role = "aut")
   )
 Config/testthat/edition: 3
