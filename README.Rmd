@@ -63,8 +63,8 @@ Outcome <- all_sheets[[3]]
 
 newBirth <- check_and_rename_levels(Birth, "Treatment")
 Bodyweight2 <- make_column_numeric_interactive(Bodyweight, "Body Weight 2")
-Bodyweight3 <- make_column_numeric_interactive(Bodyweight, "Body Weight 3")
-Bodyweight1 <- make_column_numeric_interactive(Bodyweight, "Body Weight 1")
+Bodyweight <- make_column_numeric_interactive(Bodyweight, "Body Weight 3")
+Bodyweight <- make_column_numeric_interactive(Bodyweight, "Body Weight 1")
 weight_trends(
   dataset = newBirth,
   bodyweight_data = Bodyweight2,
@@ -77,15 +77,14 @@ weight_trends(
 ```
 
 ```{r}
-Bodyweight2 <- make_column_numeric_interactive(Bodyweight, "Body Weight 2")
-Bodyweight2 <- make_column_numeric_interactive(Bodyweight, "Body Weight 3")
-Bodyweight2 <- make_column_numeric_interactive(Bodyweight, "Body Weight 1")
-
-library(plotly)
-wrongnum(
-  bodyweight_data = Bodyweight2,
+summary_stats <- summary_table(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight,
   id_col = "ID",
+  grouping_col = "Treatment",
   weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
-  time_points = c("Week 1", "Week 2", "Week 3")
+  time_points = c("Week 1", "Week 2", "Week 3"),
+  merge_needed = TRUE
 )
+print(summary_stats)
 ```
