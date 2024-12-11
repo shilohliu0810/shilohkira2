@@ -28,7 +28,7 @@ In addition, our package helps you visualize your data. We help you make a scatt
 
 You can install the development version of shilohkira like so:
 
-If you were running the folder on your computer locally, open up the shilohkira folder and run the code `devtools::install()' since this function essentially replaces the `install.packages("shilohkira")' function. Then you can run `library(shilohkira)' as usual and you would be able to use all the different functions in our package!
+If you were running the folder on your computer locally, open up the shilohkira folder and run the code `devtools::install()` since this function essentially replaces the `install.packages("shilohkira")` function. Then you can run `library(shilohkira)` as usual and you would be able to use all the different functions in our package!
 
 We also pushed our package onto GitHub, so you would also be able to install the pacakge from GitHub by running `devtools::install_github("shilohliu0810/shilohkira2")'.
 
