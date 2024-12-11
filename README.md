@@ -30,9 +30,9 @@ time in numerical format as well.
 You can install the development version of shilohkira like so:
 
 If you were running the folder on your computer locally, open up the
-shilohkira folder and run the code
-`devtools::install()' since this function essentially replaces the`install.packages(“shilohkira”)’
-function. Then you can run \`library(shilohkira)’ as usual and you would
+shilohkira folder and run the code `devtools::install()` since this
+function essentially replaces the `install.packages("shilohkira")`
+function. Then you can run `library(shilohkira)` as usual and you would
 be able to use all the different functions in our package!
 
 We also pushed our package onto GitHub, so you would also be able to
@@ -62,9 +62,129 @@ component of this dataset also makes it applicable to our package
 because we are able to help you plot different countries all on the same
 graph for displaying changes over time.
 
-## Example
+## Functions
 
-This is a basic example which shows you how to solve a common problem:
+# Function 1: check_and_rename_levels
+
+This function allows users to inspect and interactively rename the
+levels (unique values) of a specified column in a dataset. It ensures
+data consistency by letting users manually correct or standardize the
+values in the column.
+
+How It Works: Column Validation: The function first checks if the
+specified column exists in the dataset. If the column is missing, the
+function stops and throws an error message. Display Unique Values: It
+prints all unique values (levels) found in the column, providing an
+overview of the data. Interactive Renaming: The user is prompted to
+enter new names for each unique value. Pressing “Enter” retains the
+original value, allowing flexibility in corrections. The function
+replaces the original values in the column with the corrected ones,
+based on user input. Return Updated Dataset: Finally, the function
+returns the modified dataset with the updated column.
+
+Use Case: This function is particularly useful when dealing with messy
+categorical data that requires manual standardization or correction,
+such as typos, inconsistent capitalization, or other irregularities.
+
+# Function 2: make_column_numeric_interactive
+
+This function ensures that a specified column in a dataset is converted
+to numeric format, even if it contains non-numeric or messy values. It
+provides an interactive way for users to handle and clean non-numeric
+entries by allowing manual input for corrections.
+
+How It Works: Column Validation: The function first checks if the
+specified column exists in the dataset. If the column is missing, it
+stops and returns an error. Initial Cleaning: It removes non-numeric
+characters (e.g., letters, symbols) from the column to attempt a
+conversion to numeric format. Identify Non-Numeric Values: Rows that
+cannot be converted to numeric are flagged as NA and presented to the
+user for manual resolution. Interactive Resolution: For each flagged
+non-numeric value: The user is prompted to either input a valid numeric
+replacement or leave the value blank to set it as NA. Invalid inputs are
+rejected, ensuring only numeric replacements are made. Update Column:
+The cleaned and corrected column is returned in numeric format,
+replacing the original in the dataset. Return Updated Dataset: The
+modified dataset with the corrected numeric column is returned.
+
+Use Case: This function is particularly useful when working with
+datasets that include numeric columns with messy or mixed-format data
+(e.g., numbers with special characters, text, or incomplete entries). It
+ensures the column is fully numeric and allows user input to handle
+ambiguous or unexpected values.
+
+# Function 3: weight_trends
+
+This function creates a line plot to visualize trends in average body
+weights over time, grouped by a specified variable (e.g., treatment
+groups). It provides flexibility for datasets that may require merging
+or reshaping and ensures numeric values for accurate computations.
+
+How It Works: Reshape Data: After validating and making sure that data
+is numeric, the dataset is transformed from wide to long format, where
+weight measurements across time points are stacked under one column, and
+time points are relabeled as factors. Calculate Averages: The function
+computes the average weight for each group at each time point, producing
+a summary dataset for plotting. Generate Plot: A line plot is created
+using ggplot, showing trends in average weights over time, grouped by
+the specified grouping variable. Each group is represented by a distinct
+color, and points mark individual time points.
+
+Use Case: This function is ideal for visualizing longitudinal data where
+trends are tracked across multiple time points, grouped by treatments.
+
+# Function 4: summary_table
+
+This function generates a summary table of descriptive statistics for
+body weight measurements across different groups and time points. It
+provides insight into the central tendency and variability of weight
+data, making it a powerful tool for analyzing grouped longitudinal data.
+
+How It Works: Reshape Data: The dataset is transformed into a long
+format, where each time point is treated as a row. Time points are
+relabeled with user-defined labels (e.g., “Week 1”, “Week 2”). Calculate
+Summary Statistics: The function calculates the following statistics for
+each group at each time point: mean, median, standard deviation, count.
+Return Table: A neatly formatted summary table is returned, showing the
+calculated statistics for each group and time point.
+
+Use Case: This function is ideal for creating a detailed summary of
+trends across groups and time points. It is particularly useful for
+statistical reporting and exploring patterns in longitudinal studies.
+
+# Function 5: wrong_num
+
+This function identifies potential anomalies in body weight data across
+multiple time points for each ID and visualizes the trends using an
+interactive scatter plot. The purpose is to highlight any unusual weight
+entries or patterns, enabling users to spot and address data issues
+effectively.
+
+How It Works: Reshape Data: The dataset is transformed into a long
+format, where each weight measurement is stacked as a separate row. Time
+points are relabeled with user-specified labels (e.g., “Week 1”, “Week
+2”). Interactive Visualization: The function generates an interactive
+scatter plot using the plotly library. Each line represents the weight
+trend for a specific ID across time points. Points represent individual
+weight measurements, making it easy to spot anomalies or irregularities.
+Hovering over a point displays detailed information, including ID,
+weight, and time point. The interactive plot allows users to identify
+outliers, missing values, or unexpected trends in the weight data for
+further investigation.
+
+Use Case: This function is ideal for exploratory data analysis (EDA) in
+longitudinal studies, where tracking individual trends over time is
+crucial. It helps detect: Outliers (e.g., unusually high or low
+weights), Missing or incorrect data entries, Irregular patterns that may
+warrant further.
+
+## Examples
+
+This is an example for using the `check_and_rename_levels` function to
+rename typos in the Birth sheet, using the
+`make_column_numeric_interactive` function to make the Birthweight
+columns numeric, and generating the weight trend plot using the function
+`weight_trends`.
 
 ``` r
 library(shilohkira)
@@ -73,11 +193,11 @@ library(shilohkira)
 ``` r
 ## basic example code
 install.packages("readxl")
-#> Installing package into '/private/var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T/RtmprB6ryM/temp_libpath34e24b1c3e0c'
+#> Installing package into '/private/var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T/RtmpuF2RYI/temp_libpath707664ed8d28'
 #> (as 'lib' is unspecified)
 #> 
 #> The downloaded binary packages are in
-#>  /var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T//RtmpmLo0kD/downloaded_packages
+#>  /var/folders/bl/ty38nsqs4334ccr2xpygp5mr0000gp/T//RtmpDwgY9r/downloaded_packages
 library(readxl)
 library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
@@ -90,10 +210,9 @@ library(tidyverse)
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
 #> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-setwd("/Users/shilohliu/Dropbox/shilohkira2")
 sheet_names <- excel_sheets("data-raw/mousedata.xlsx")
 all_sheets <- lapply(sheet_names, function(sheet) {
-  read_excel("/Users/shilohliu/Dropbox/shilohkira2/data-raw/mousedata.xlsx", sheet = sheet)
+  read_excel("data-raw/mousedata.xlsx", sheet = sheet)
 })
 #> New names:
 #> • `Date Body Weight 2` -> `Date Body Weight 2...5`
@@ -132,7 +251,8 @@ weight_trends(
 )
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-example-1.png" width="100%" /> This is an
+example of using the `summary_stats` function on clean data.
 
 ``` r
 summary_stats <- summary_table(
