@@ -15,15 +15,55 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+# Loading in the sample datasets
 library(shilohkira)
+install.packages("readxl")
+library(readxl)
+library(tidyverse)
+sheet_names <- excel_sheets("data-raw/mousedata.xlsx")
+all_sheets <- lapply(sheet_names, function(sheet) {
+  read_excel("data-raw/mousedata.xlsx", sheet = sheet)
+})
+names(all_sheets) <- sheet_names
+Birth <- all_sheets[[1]]    
+Bodyweight <- all_sheets[[2]] 
+Outcome <- all_sheets[[3]]  
+
+own <- read.csv("data-raw/mortality.csv")
 ```
 ```{r}
+# Examples for check_and_rename_levels
 newBirth <- check_and_rename_levels(Birth, "Treatment")
 
+# Example 1: works for any other column as well
+example1 <- check_and_rename_levels(Birth, "Sex")
+
+# Example 2: failed example -- when a column entered does not exist
+example2 <- check_and_rename_levels(mousedata, "None")
+# this outputs a message telling user the column doesn't exist
+```
+
+```{r}
+# Examples for make_column_numeric_interactive
 Bodyweight2 <- make_column_numeric_interactive(Bodyweight2, "Body Weight 2")
 Bodyweight2 <- make_column_numeric_interactive(Bodyweight2, "Body Weight 3")
 Bodyweight2 <- make_column_numeric_interactive(Bodyweight2, "Body Weight 1")
 
+# Example 1: it runs on our mortality dataset
+example11 <- make_column_numeric_interactive(own, "Number.of.Deaths")
+example11 <- make_column_numeric_interactive(own, "Death.Rate.Per.100.000")
+
+# Example 2: if you enter something non-numeric for the correction, the function does not allow it and warn you about it to try again, ensuring that the entire column is numeric.
+# this prompts you to enter a numeric value, if you enter a non-numeric value, such as "Bob", it will prompt you to enter a number again.
+example12 <- make_column_numeric_interactive(Bodyweight, "Body Weight 3")
+
+# example 3: Failed example -- when a column entered does not exist
+example13 <- make_column_numeric_interactive(own, "Slay")
+# this outputs a message telling user the column doesn't exist
+```
+
+```{r}
+# Examples for weight_trends
 weight_trends(
   dataset = newBirth,
   bodyweight_data = Bodyweight2,
@@ -34,6 +74,31 @@ weight_trends(
   merge_needed = TRUE
 )
 
+# Example 1: create plot where we are grouping by any categorical variable, do so by changing grouping_col. Here we change the grouping from Treatment to Sex.
+weight_trends(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  grouping_col = "Sex",
+  weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
+  time_points = c("Week 1", "Week 2", "Week 3"),
+  merge_needed = TRUE
+)
+
+# Example 2: can create plot for any number of weeks there are, change the weight_col and time_points. 
+weight_trends(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  grouping_col = "Treatment",
+  weight_cols = c("Body Weight 1", "Body Weight 2"),
+  time_points = c("Week 1", "Week 2"),
+  merge_needed = TRUE
+)
+```
+
+```{r}
+# Examples for summary_stats
 summary_stats <- summary_table(
   dataset = newBirth,
   bodyweight_data = Bodyweight2,
@@ -44,10 +109,59 @@ summary_stats <- summary_table(
   merge_needed = TRUE
 )
 
+# Example 1: create table where we are grouping by any categorical variable, do so by changing grouping_col. Here we change the grouping from Treatment to Sex.
+example31 <- summary_table(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  grouping_col = "Sex",
+  weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
+  time_points = c("Week 1", "Week 2", "Week 3"),
+  merge_needed = TRUE
+)
+
+# Example 2: can create table for any number of weeks there are, change the weight_col and time_points. 
+example32 <- summary_table(
+  dataset = newBirth,
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  grouping_col = "Treatment",
+  weight_cols = c("Body Weight 1", "Body Weight 2"),
+  time_points = c("Week 1", "Week 2"),
+  merge_needed = TRUE
+)
+```
+
+```{r}
+# Examples for wrongnum
 wrongnum(
   bodyweight_data = Bodyweight2,
   id_col = "ID",
   weight_cols = c("Body Weight 1", "Body Weight 2", "Body Weight 3"),
   time_points = c("Week 1", "Week 2", "Week 3")
+)
+
+# Example 1: can create table for any number of weeks there are, change the weight_col and time_points. 
+wrongnum(
+  bodyweight_data = Bodyweight2,
+  id_col = "ID",
+  weight_cols = c("Body Weight 1", "Body Weight 2"),
+  time_points = c("Week 1", "Week 2")
+)
+
+# Example 2: it works not just for the Bodyweight tab, but also for the Outcome tab (or any that has overtime data).
+wrongnum(
+bodyweight_data = Outcome,
+id_col = "Subject_ID",
+weight_cols = c("Outcome 1", "Outcome 2", "Outcome 3"),
+time_points = c("Week 1", "Week 2", "week 3")
+)
+
+# Example 3: if you enter non-existent column(s), it will list out the columns that don't exist.
+wrongnum(
+  bodyweight_data = Outcome,
+  id_col = "ID",
+  weight_cols = c("Weight 1", "Outcome 2", "Outcome 3"),
+  time_points = c("Week 1", "Week 2", "week 3")
 )
 ```
