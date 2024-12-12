@@ -101,7 +101,7 @@ This function is ideal for exploratory data analysis (EDA) in longitudinal studi
 
 ## Examples
 
-This is an example for using the `check_and_rename_levels` function to rename typos in the Birth sheet, using the `make_column_numeric_interactive` function to make the Birthweight columns numeric, and generating the weight trend plot using the function `weight_trends`.
+This is an example for using the `check_and_rename_levels` function to rename typos in the Birth sheet, using the `make_column_numeric_interactive` function to make the Birthweight columns numeric, and generating the weight trend plot using the function `weight_trends`. Since our function `check_and_rename_levels` is interactive we are unfortunately unable to display the process online, so the plot contains four different treatment groups when in reality there are just two. However, if you were to run the code on the local machine everything should proceed perfectly fine.
 
 ```{r}
 library(shilohkira)
